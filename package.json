@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "notes-api",
+=======
+  "name": "serverless-notes-api",
+>>>>>>> 7fb06401640170262532fd9fd0a0959ffd449cef
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
