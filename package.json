@@ -1,11 +1,7 @@
 {
-<<<<<<< HEAD
   "name": "notes-api",
-=======
-  "name": "serverless-notes-api",
->>>>>>> 7fb06401640170262532fd9fd0a0959ffd449cef
   "version": "1.0.0",
-  "description": "",
+  "description": "Serverless Notes API using AWS Lambda, API Gateway, and DynamoDB",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
