@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dil Pickle to-do</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #3a3a3a;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .phone {
+      width: 340px;
+      min-height: 620px;
+      background: #fff;
+      border-radius: 32px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      position: relative;
+    }
+
+    .screen { display: none; flex-direction: column; flex: 1; }
+    .screen.active { display: flex; }
+
+    /* SPLASH */
+    #splash {
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 40px 24px;
+      background: #fff;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .pickle-mascot {
+      width: 110px;
+      height: 110px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .app-title {
+      font-family: 'Caveat', cursive;
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: 0.5px;
+    }
+
+    .splash-btn {
+      margin-top: 20px;
+      background: #e03e3e;
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      padding: 12px 36px;
+      font-family: 'Caveat', cursive;
+      font-size: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .splash-btn:hover { background: #c03030; transform: scale(1.04); }
+
+    /* DASHBOARD */
+    #dashboard {
+      flex-direction: column;
+      padding: 0;
+      background: #fff;
+    }
+
+    .dash-header {
+      padding: 28px 24px 0;
+      text-align: center;
+    }
+
+    .dash-title {
+      font-family: 'Caveat', cursive;
+      font-size: 26px;
+      font-weight: 700;
+      color: #222;
+      letter-spacing: 0.3px;
+    }
+
+    /* API status badge */
+    .api-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: background 0.3s;
+    }
+    .status-dot.connected { background: #2a9d60; }
+    .status-dot.error { background: #e03e3e; }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 24px 0;
+    }
+
+    .task-input {
+      flex: 1;
+      border: none;
+      border-bottom: 2.5px solid #2a9d60;
+      outline: none;
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: #333;
+      padding: 6px 2px;
+      background: transparent;
+    }
+    .task-input::placeholder { color: #000000; font-size: 18px; font-family: 'Caveat', cursive; }
+
+    .add-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #e03e3e;
+      font-size: 26px;
+      line-height: 1;
+      padding: 0 2px;
+      transition: transform 0.15s;
+    }
+    .add-btn:hover { transform: scale(1.2); }
+    .add-btn:disabled { color: #ccc; cursor: not-allowed; transform: none; }
+
+    .section-label {
+      font-family: 'Caveat', cursive;
+      font-size: 20px;
+      font-weight: 600;
+      color: #e03e3e;
+      padding: 18px 24px 8px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .task-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 4px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideUp 0.3s ease;
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .task-check {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #e03e3e;
+      border-radius: 6px;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      background: #fff;
+    }
+
+    .task-check.done {
+      background: #2a9d60;
+      border-color: #2a9d60;
+    }
+
+    .task-check.done::after {
+      content: '✓';
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .task-text {
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      color: #333;
+      flex: 1;
+      transition: color 0.2s;
+    }
+
+    .task-text.done {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    .task-delete {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 18px;
+      line-height: 1;
+      padding: 0 2px;
+      transition: color 0.15s;
+    }
+    .task-delete:hover { color: #e03e3e; }
+    .task-delete:disabled { cursor: not-allowed; }
+
+    .empty-hint {
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: #bbb;
+      text-align: center;
+      padding: 30px 0 10px;
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f0f0f0;
+      border-top-color: #2a9d60;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 20px auto;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #333;
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast.success { background: #2a9d60; }
+    .toast.error { background: #e03e3e; }
+
+    .divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 0 24px;
+    }
+
+    /* AI suggestions */
+    .ai-row {
+      padding: 12px 24px 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .ai-label {
+      font-family: 'Caveat', cursive;
+      font-size: 15px;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    .ai-chip {
+      background: #f0faf5;
+      border: 1.5px solid #2a9d60;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      color: #2a9d60;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .ai-chip:hover { background: #d4f0e3; }
+
+    .ai-loading {
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .ai-suggest-btn {
+      background: none;
+      border: 1.5px solid #2a9d60;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-family: 'Caveat', cursive;
+      font-size: 15px;
+      color: #2a9d60;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .ai-suggest-btn:hover { background: #d4f0e3; }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="toast" id="toast"></div>
+
+  <!-- SPLASH SCREEN -->
+  <div class="screen active" id="splash">
+    <svg class="pickle-mascot" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="55" cy="78" rx="38" ry="16" fill="#7ab3e0"/>
+      <path d="M17 78 Q17 100 55 100 Q93 100 93 78 Z" fill="#7ab3e0"/>
+      <ellipse cx="55" cy="78" rx="38" ry="16" fill="#6aa2d0" opacity="0.5"/>
+      <ellipse cx="55" cy="52" rx="22" ry="30" fill="#6dbf60"/>
+      <circle cx="45" cy="44" r="4" fill="#5aaa4e" opacity="0.7"/>
+      <circle cx="63" cy="40" r="3.5" fill="#5aaa4e" opacity="0.7"/>
+      <circle cx="50" cy="58" r="4" fill="#5aaa4e" opacity="0.7"/>
+      <circle cx="66" cy="55" r="3" fill="#5aaa4e" opacity="0.7"/>
+      <circle cx="42" cy="62" r="3" fill="#5aaa4e" opacity="0.7"/>
+      <circle cx="47" cy="46" r="6" fill="white"/>
+      <circle cx="63" cy="46" r="6" fill="white"/>
+      <circle cx="48.5" cy="47" r="3" fill="#333"/>
+      <circle cx="64.5" cy="47" r="3" fill="#333"/>
+      <circle cx="49.5" cy="46" r="1" fill="white"/>
+      <circle cx="65.5" cy="46" r="1" fill="white"/>
+      <path d="M47 58 Q55 65 63 58" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M55 22 Q58 12 65 10" stroke="#3d8c36" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="65" cy="10" r="3" fill="#3d8c36"/>
+    </svg>
+    <div class="app-title">Dil Pickle to-do</div>
+    <button class="splash-btn" onclick="showDashboard()">let's go! 🥒</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="screen" id="dashboard">
+    <div class="dash-header">
+      <div class="dash-title">My silly little tasks</div>
+      <div class="api-status">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">connecting...</span>
+      </div>
+    </div>
+
+    <div class="input-row">
+      <input class="task-input" id="taskInput" type="text" placeholder="add new task"
+        onkeydown="if(event.key==='Enter') addTask()"/>
+      <button class="add-btn" id="addBtn" onclick="addTask()">+</button>
+    </div>
+
+    <div class="divider" style="margin-top:14px;"></div>
+    <div class="section-label">task list</div>
+
+    <div class="task-list" id="taskList">
+      <div class="loading-spinner" id="loadingSpinner"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="ai-row" id="aiRow">
+      <span class="ai-label">✨ suggest:</span>
+      <span class="ai-loading" id="aiLoading" style="display:none">thinking...</span>
+      <div id="aiChips"></div>
+      <button class="ai-suggest-btn" onclick="fetchSuggestions()">get ideas ↗</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // =============================================
+  // 🔧 CONFIGURATION — paste your API URL here
+  // =============================================
+  const API_BASE = 'https://g049fi00oe.execute-api.us-east-1.amazonaws.com/dev';
+
+  // In-memory tasks cache
+  let tasks = [];
+
+  // =============================================
+  // TOAST NOTIFICATIONS
+  // =============================================
+  function showToast(msg, type = '') {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast show ' + type;
+    setTimeout(() => { toast.className = 'toast'; }, 2500);
+  }
+
+  // =============================================
+  // API STATUS INDICATOR
+  // =============================================
+  function setStatus(state) {
+    const dot = document.getElementById('statusDot');
+    const text = document.getElementById('statusText');
+    if (state === 'connected') {
+      dot.className = 'status-dot connected';
+      text.textContent = 'connected to AWS';
+    } else if (state === 'error') {
+      dot.className = 'status-dot error';
+      text.textContent = 'API error';
+    } else {
+      dot.className = 'status-dot';
+      text.textContent = 'connecting...';
+    }
+  }
+
+  // =============================================
+  // SHOW DASHBOARD & LOAD TASKS
+  // =============================================
+  function showDashboard() {
+    document.getElementById('splash').classList.remove('active');
+    document.getElementById('dashboard').classList.add('active');
+    loadTasks();
+    fetchSuggestions();
+  }
+
+  // =============================================
+  // RENDER TASKS FROM CACHE
+  // =============================================
+  function renderTasks() {
+    const list = document.getElementById('taskList');
+    list.innerHTML = '';
+
+    if (tasks.length === 0) {
+      const hint = document.createElement('div');
+      hint.className = 'empty-hint';
+      hint.textContent = 'no tasks yet... add one above! 🥒';
+      list.appendChild(hint);
+      return;
+    }
+
+    tasks.forEach((task) => {
+      const done = task.content === 'done';
+      const item = document.createElement('div');
+      item.className = 'task-item';
+      item.dataset.id = task.id;
+      item.innerHTML = `
+        <div class="task-check ${done ? 'done' : ''}" onclick="toggleTask('${task.id}', ${done})"></div>
+        <span class="task-text ${done ? 'done' : ''}">${escapeHtml(task.title)}</span>
+        <button class="task-delete" onclick="deleteTask('${task.id}')">×</button>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // =============================================
+  // LOAD ALL TASKS FROM API
+  // =============================================
+  async function loadTasks() {
+    try {
+      const res = await fetch(`${API_BASE}/notes`);
+      if (!res.ok) throw new Error('Failed to load');
+      const data = await res.json();
+      tasks = data.notes || [];
+      setStatus('connected');
+      renderTasks();
+    } catch (e) {
+      setStatus('error');
+      document.getElementById('taskList').innerHTML =
+        '<div class="empty-hint">couldn\'t load tasks 😢</div>';
+      showToast('Could not connect to API', 'error');
+    }
+  }
+
+  // =============================================
+  // CREATE TASK
+  // =============================================
+  async function addTask() {
+    const input = document.getElementById('taskInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const btn = document.getElementById('addBtn');
+    btn.disabled = true;
+    input.disabled = true;
+
+    try {
+      const res = await fetch(`${API_BASE}/notes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: text, content: 'pending' })
+      });
+      if (!res.ok) throw new Error('Failed to create');
+      const data = await res.json();
+      tasks.unshift(data.note);
+      renderTasks();
+      input.value = '';
+      showToast('Task added! 🥒', 'success');
+      fetchSuggestions();
+    } catch (e) {
+      showToast('Could not add task', 'error');
+    } finally {
+      btn.disabled = false;
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  // =============================================
+  // TOGGLE TASK (done / pending)
+  // =============================================
+  async function toggleTask(id, currentlyDone) {
+    const newStatus = currentlyDone ? 'pending' : 'done';
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
+
+    // Optimistic UI update
+    task.content = newStatus;
+    renderTasks();
+
+    try {
+      const res = await fetch(`${API_BASE}/notes/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: task.title, content: newStatus })
+      });
+      if (!res.ok) throw new Error('Failed to update');
+    } catch (e) {
+      // Revert on failure
+      task.content = currentlyDone ? 'done' : 'pending';
+      renderTasks();
+      showToast('Could not update task', 'error');
+    }
+  }
+
+  // =============================================
+  // DELETE TASK
+  // =============================================
+  async function deleteTask(id) {
+    // Optimistic UI update
+    const prev = [...tasks];
+    tasks = tasks.filter(t => t.id !== id);
+    renderTasks();
+
+    try {
+      const res = await fetch(`${API_BASE}/notes/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to delete');
+      showToast('Task deleted', '');
+    } catch (e) {
+      // Revert on failure
+      tasks = prev;
+      renderTasks();
+      showToast('Could not delete task', 'error');
+    }
+  }
+
+  // =============================================
+  // AI SUGGESTIONS (Claude API)
+  // =============================================
+  async function fetchSuggestions() {
+    const loading = document.getElementById('aiLoading');
+    const chips = document.getElementById('aiChips');
+    chips.innerHTML = '';
+    loading.style.display = '';
+
+    const existingTasks = tasks.map(t => t.title).join(', ') || 'none yet';
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 200,
+          system: 'You are a playful, helpful task suggestion assistant for a cute todo app called "Dil Pickle to-do". Generate exactly 3 short, fun task suggestions based on the user\'s existing tasks. Respond ONLY with a JSON array of 3 strings like: ["Buy groceries", "Call dentist", "Water plants"]. Each task should be short (2-5 words). Be helpful but occasionally slightly silly/pickle-themed.',
+          messages: [{
+            role: 'user',
+            content: `My current tasks: ${existingTasks}. Suggest 3 tasks I might want to add.`
+          }]
+        })
+      });
+
+      const data = await res.json();
+      loading.style.display = 'none';
+
+      const text = data.content?.map(b => b.text || '').join('') || '[]';
+      const clean = text.replace(/```json|```/g, '').trim();
+      let suggestions = [];
+      try { suggestions = JSON.parse(clean); } catch(e) { suggestions = []; }
+
+      suggestions.forEach(s => {
+        const chip = document.createElement('button');
+        chip.className = 'ai-chip';
+        chip.textContent = '+ ' + s;
+        chip.onclick = async () => {
+          chip.disabled = true;
+          chip.textContent = '...';
+          try {
+            const res = await fetch(`${API_BASE}/notes`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ title: s, content: 'pending' })
+            });
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            tasks.unshift(data.note);
+            renderTasks();
+            chip.remove();
+            showToast('Task added! 🥒', 'success');
+          } catch(e) {
+            chip.disabled = false;
+            chip.textContent = '+ ' + s;
+            showToast('Could not add task', 'error');
+          }
+        };
+        chips.appendChild(chip);
+      });
+    } catch(e) {
+      loading.style.display = 'none';
+      chips.innerHTML = '<span style="font-size:13px;color:#ccc;font-style:italic;">suggestions unavailable</span>';
+    }
+  }
+</script>
+
+</body>
+</html>
