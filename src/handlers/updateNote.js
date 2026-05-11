@@ -4,25 +4,28 @@ const { DynamoDBDocumentClient, UpdateCommand, GetCommand } = require("@aws-sdk/
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
+const headers = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "OPTIONS,GET,POST,PUT,DELETE"
+};
+
 module.exports.handler = async (event) => {
   try {
     const { id } = event.pathParameters;
     const data = JSON.parse(event.body);
-
-    // Check if note exists
     const existing = await docClient.send(new GetCommand({
       TableName: process.env.NOTES_TABLE,
       Key: { id },
     }));
-
     if (!existing.Item) {
       return {
         statusCode: 404,
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ error: "Note not found" }),
       };
     }
-
     const result = await docClient.send(new UpdateCommand({
       TableName: process.env.NOTES_TABLE,
       Key: { id },
@@ -34,16 +37,15 @@ module.exports.handler = async (event) => {
       },
       ReturnValues: "ALL_NEW",
     }));
-
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify({ message: "Note updated successfully", note: result.Attributes }),
     };
   } catch (error) {
     return {
       statusCode: 500,
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify({ error: "Could not update note", details: error.message }),
     };
   }
