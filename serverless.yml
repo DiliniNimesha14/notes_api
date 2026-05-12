@@ -6,8 +6,11 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: us-east-1
+  deploymentBucket:
+    name: serverless-framework-deployments-us-east-1-6ab05a25-54a0
   environment:
     NOTES_TABLE: notes-api-dev-notes
+    IMAGES_BUCKET: notes-api-images-123
   iam:
     role:
       statements:
@@ -20,6 +23,12 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: "arn:aws:dynamodb:us-east-1:*:table/notes-api-dev-notes"
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+            - s3:DeleteObject
+          Resource: "arn:aws:s3:::notes-api-images-123/*"
 
 functions:
   createNote:
@@ -59,6 +68,30 @@ functions:
     events:
       - http:
           path: notes/{id}
+          method: delete
+          cors: true
+
+  getUploadUrl:
+    handler: src/handlers/uploadImage.getUploadUrl
+    events:
+      - http:
+          path: notes/upload-url
+          method: post
+          cors: true
+
+  saveImageUrl:
+    handler: src/handlers/uploadImage.saveImageUrl
+    events:
+      - http:
+          path: notes/save-image
+          method: post
+          cors: true
+
+  deleteImage:
+    handler: src/handlers/uploadImage.deleteImage
+    events:
+      - http:
+          path: notes/{id}/image
           method: delete
           cors: true
 

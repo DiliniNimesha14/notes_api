@@ -43,283 +43,215 @@
       animation: fadeIn 0.5s ease;
     }
 
-    .pickle-mascot {
-      width: 110px;
-      height: 110px;
-      animation: bounce 2s ease-in-out infinite;
-    }
+    .pickle-mascot { width: 110px; height: 110px; animation: bounce 2s ease-in-out infinite; }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes shimmer {
-      0% { background-position: -200px 0; }
-      100% { background-position: 200px 0; }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes shimmer { 0%{background-position:-200px 0} 100%{background-position:200px 0} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    @keyframes spin { to{transform:rotate(360deg)} }
 
-    .app-title {
-      font-family: 'Caveat', cursive;
-      font-size: 28px;
-      font-weight: 700;
-      color: #333;
-    }
+    .app-title { font-family:'Caveat',cursive; font-size:28px; font-weight:700; color:#333; }
 
     .splash-btn {
-      margin-top: 20px;
-      background: #e03e3e;
-      color: #fff;
-      border: none;
-      border-radius: 24px;
-      padding: 12px 36px;
-      font-family: 'Caveat', cursive;
-      font-size: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.15s, background 0.15s;
+      margin-top:20px; background:#e03e3e; color:#fff; border:none;
+      border-radius:24px; padding:12px 36px;
+      font-family:'Caveat',cursive; font-size:20px; font-weight:600;
+      cursor:pointer; transition:transform 0.15s,background 0.15s;
     }
-    .splash-btn:hover { background: #c03030; transform: scale(1.04); }
+    .splash-btn:hover { background:#c03030; transform:scale(1.04); }
 
     /* DASHBOARD */
-    #dashboard { flex-direction: column; padding: 0; background: #fff; }
-    .dash-header { padding: 28px 24px 0; text-align: center; }
-    .dash-title {
-      font-family: 'Caveat', cursive;
-      font-size: 26px;
-      font-weight: 700;
-      color: #222;
-    }
+    #dashboard { flex-direction:column; padding:0; background:#fff; }
+    .dash-header { padding:28px 24px 0; text-align:center; }
+    .dash-title { font-family:'Caveat',cursive; font-size:26px; font-weight:700; color:#222; }
 
-    .api-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: #888;
-      margin-top: 4px;
-    }
-    .status-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #ccc;
-      transition: background 0.3s;
-    }
-    .status-dot.connected { background: #2a9d60; }
-    .status-dot.error { background: #e03e3e; }
-    .status-dot.loading { background: #f0a500; animation: pulse 1s ease-in-out infinite; }
+    .api-status { display:inline-flex; align-items:center; gap:5px; font-size:11px; color:#888; margin-top:4px; }
+    .status-dot { width:7px; height:7px; border-radius:50%; background:#ccc; transition:background 0.3s; }
+    .status-dot.connected { background:#2a9d60; }
+    .status-dot.error { background:#e03e3e; }
+    .status-dot.loading { background:#f0a500; animation:pulse 1s ease-in-out infinite; }
 
-    .input-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 20px 24px 0;
-    }
-
+    .input-row { display:flex; align-items:center; gap:10px; padding:20px 24px 0; }
     .task-input {
-      flex: 1;
-      border: none;
-      border-bottom: 2.5px solid #2a9d60;
-      outline: none;
-      font-family: 'Caveat', cursive;
-      font-size: 18px;
-      color: #333;
-      padding: 6px 2px;
-      background: transparent;
+      flex:1; border:none; border-bottom:2.5px solid #2a9d60; outline:none;
+      font-family:'Caveat',cursive; font-size:18px; color:#333; padding:6px 2px; background:transparent;
     }
-    .task-input::placeholder { color: #aaa; font-size: 18px; font-family: 'Caveat', cursive; }
-    .task-input:disabled { opacity: 0.5; }
+    .task-input::placeholder { color:#aaa; font-size:18px; font-family:'Caveat',cursive; }
+    .task-input:disabled { opacity:0.5; }
 
     .add-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #e03e3e;
-      font-size: 26px;
-      line-height: 1;
-      padding: 0 2px;
-      transition: transform 0.15s;
+      background:none; border:none; cursor:pointer; color:#e03e3e;
+      font-size:26px; line-height:1; padding:0 2px; transition:transform 0.15s;
     }
-    .add-btn:hover { transform: scale(1.2); }
-    .add-btn:disabled { color: #ccc; cursor: not-allowed; transform: none; }
+    .add-btn:hover { transform:scale(1.2); }
+    .add-btn:disabled { color:#ccc; cursor:not-allowed; transform:none; }
 
     .section-label {
-      font-family: 'Caveat', cursive;
-      font-size: 20px;
-      font-weight: 600;
-      color: #e03e3e;
-      padding: 18px 24px 8px;
-      text-align: center;
+      font-family:'Caveat',cursive; font-size:20px; font-weight:600;
+      color:#e03e3e; padding:18px 24px 8px; text-align:center;
     }
 
     .task-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 4px 24px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
+      flex:1; overflow-y:auto; padding:4px 20px 16px;
+      display:flex; flex-direction:column; gap:12px; align-items:center;
     }
 
-    /* Skeleton loading */
+    /* Skeleton */
     .skeleton-item {
-      width: 100%;
-      max-width: 260px;
-      height: 28px;
-      border-radius: 8px;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 400px 100%;
-      animation: shimmer 1.2s ease-in-out infinite;
+      width:100%; max-width:280px; height:28px; border-radius:8px;
+      background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);
+      background-size:400px 100%; animation:shimmer 1.2s ease-in-out infinite;
     }
 
-    /* Task item */
-    .task-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      animation: slideUp 0.3s ease;
-      width: 100%;
-      max-width: 260px;
+    /* Task card */
+    .task-card {
+      width:100%; max-width:280px;
+      border:1.5px solid #f0f0f0; border-radius:16px;
+      padding:10px 12px; animation:slideUp 0.3s ease;
+      background:#fff; transition:box-shadow 0.2s;
     }
+    .task-card:hover { box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+
+    /* Top row: checkbox + title + actions */
+    .task-top { display:flex; align-items:center; gap:8px; }
 
     .task-check {
-      width: 22px; height: 22px;
-      border: 2px solid #e03e3e;
-      border-radius: 6px;
-      flex-shrink: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
-      background: #fff;
+      width:20px; height:20px; border:2px solid #e03e3e; border-radius:5px;
+      flex-shrink:0; cursor:pointer; display:flex; align-items:center;
+      justify-content:center; transition:background 0.2s,border-color 0.2s; background:#fff;
     }
-    .task-check.done { background: #2a9d60; border-color: #2a9d60; }
-    .task-check.done::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 700; }
+    .task-check.done { background:#2a9d60; border-color:#2a9d60; }
+    .task-check.done::after { content:'✓'; color:#fff; font-size:12px; font-weight:700; }
 
-    .task-text {
-      font-family: 'Nunito', sans-serif;
-      font-size: 15px;
-      color: #333;
-      flex: 1;
-      word-break: break-word;
-    }
-    .task-text.done { text-decoration: line-through; color: #aaa; }
+    .task-text { font-family:'Nunito',sans-serif; font-size:14px; color:#333; flex:1; word-break:break-word; }
+    .task-text.done { text-decoration:line-through; color:#aaa; }
 
-    /* Inline edit input */
     .task-edit-input {
-      flex: 1;
-      border: none;
-      border-bottom: 2px solid #2a9d60;
-      outline: none;
-      font-family: 'Nunito', sans-serif;
-      font-size: 15px;
-      color: #333;
-      background: transparent;
-      padding: 2px 0;
+      flex:1; border:none; border-bottom:2px solid #2a9d60; outline:none;
+      font-family:'Nunito',sans-serif; font-size:14px; color:#333;
+      background:transparent; padding:2px 0;
     }
 
-    .task-actions { display: flex; gap: 2px; flex-shrink: 0; }
-
+    .task-actions { display:flex; gap:1px; flex-shrink:0; }
     .task-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 15px;
-      line-height: 1;
-      padding: 2px 3px;
-      color: #ccc;
-      transition: transform 0.15s, color 0.15s;
+      background:none; border:none; cursor:pointer;
+      font-size:14px; line-height:1; padding:2px 3px;
+      color:#ccc; transition:transform 0.15s,color 0.15s;
     }
-    .task-btn:hover { transform: scale(1.2); }
-    .task-btn.edit:hover { color: #f0a500; }
-    .task-btn.save:hover { color: #2a9d60; }
-    .task-btn.cancel:hover { color: #888; }
-    .task-btn.delete:hover { color: #e03e3e; }
-    .task-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .task-btn:hover { transform:scale(1.2); }
+    .task-btn.edit:hover { color:#f0a500; }
+    .task-btn.save:hover { color:#2a9d60; }
+    .task-btn.cancel:hover { color:#888; }
+    .task-btn.delete:hover { color:#e03e3e; }
+    .task-btn.img-btn:hover { color:#7ab3e0; }
+    .task-btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+
+    /* Image section inside task card */
+    .task-image-section { margin-top:8px; }
+
+    .task-image-wrapper {
+      position:relative; width:100%; border-radius:10px; overflow:hidden;
+      background:#f8f8f8; border:1px solid #eee;
+    }
+    .task-image { width:100%; max-height:160px; object-fit:cover; display:block; border-radius:10px; }
+
+    .img-delete-btn {
+      position:absolute; top:6px; right:6px;
+      background:rgba(224,62,62,0.85); color:#fff; border:none;
+      border-radius:50%; width:24px; height:24px; cursor:pointer;
+      font-size:13px; display:flex; align-items:center; justify-content:center;
+      transition:background 0.2s;
+    }
+    .img-delete-btn:hover { background:#c03030; }
+
+    /* Upload button area */
+    .img-upload-area {
+      display:flex; align-items:center; gap:8px; margin-top:4px;
+    }
+
+    .img-upload-label {
+      display:flex; align-items:center; gap:5px;
+      background:#f0f8ff; border:1.5px dashed #7ab3e0; border-radius:10px;
+      padding:6px 12px; cursor:pointer; flex:1;
+      font-family:'Nunito',sans-serif; font-size:13px; color:#7ab3e0;
+      transition:background 0.15s;
+    }
+    .img-upload-label:hover { background:#e0f0ff; }
+
+    .img-upload-input { display:none; }
+
+    .img-uploading {
+      font-family:'Nunito',sans-serif; font-size:12px; color:#f0a500;
+      display:flex; align-items:center; gap:5px;
+    }
+    .img-uploading .spinner {
+      width:12px; height:12px; border:2px solid #f0e8d0;
+      border-top-color:#f0a500; border-radius:50%;
+      animation:spin 0.7s linear infinite; flex-shrink:0;
+    }
 
     .empty-hint {
-      font-family: 'Caveat', cursive;
-      font-size: 18px;
-      color: #bbb;
-      text-align: center;
-      padding: 30px 0 10px;
+      font-family:'Caveat',cursive; font-size:18px;
+      color:#bbb; text-align:center; padding:30px 0 10px;
     }
 
     /* Toast */
     .toast {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: #333;
-      color: #fff;
-      font-size: 13px;
-      padding: 8px 16px;
-      border-radius: 20px;
-      opacity: 0;
-      transition: opacity 0.3s, transform 0.3s;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 100;
+      position:absolute; bottom:80px; left:50%;
+      transform:translateX(-50%) translateY(20px);
+      background:#333; color:#fff; font-size:13px;
+      padding:8px 16px; border-radius:20px; opacity:0;
+      transition:opacity 0.3s,transform 0.3s;
+      pointer-events:none; white-space:nowrap; z-index:100;
     }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    .toast.success { background: #2a9d60; }
-    .toast.error { background: #e03e3e; }
-    .toast.info { background: #f0a500; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+    .toast.success { background:#2a9d60; }
+    .toast.error { background:#e03e3e; }
+    .toast.info { background:#f0a500; }
 
-    .divider { height: 1px; background: #f0f0f0; margin: 0 24px; }
+    .divider { height:1px; background:#f0f0f0; margin:0 24px; }
 
     /* AI row */
-    .ai-row {
-      padding: 10px 24px 14px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .ai-label { font-family: 'Caveat', cursive; font-size: 15px; color: #888; }
+    .ai-row { padding:10px 24px 14px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .ai-label { font-family:'Caveat',cursive; font-size:15px; color:#888; }
     .ai-chip {
-      background: #f0faf5;
-      border: 1.5px solid #2a9d60;
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 13px;
-      color: #2a9d60;
-      cursor: pointer;
-      transition: background 0.15s;
+      background:#f0faf5; border:1.5px solid #2a9d60; border-radius:20px;
+      padding:4px 12px; font-family:'Nunito',sans-serif; font-size:13px;
+      color:#2a9d60; cursor:pointer; transition:background 0.15s;
     }
-    .ai-chip:hover { background: #d4f0e3; }
-    .ai-chip:disabled { opacity: 0.5; cursor: not-allowed; }
-    .ai-loading { font-size: 13px; color: #aaa; font-style: italic; }
+    .ai-chip:hover { background:#d4f0e3; }
+    .ai-chip:disabled { opacity:0.5; cursor:not-allowed; }
+    .ai-loading { font-size:13px; color:#aaa; font-style:italic; }
     .ai-suggest-btn {
-      background: none;
-      border: 1.5px solid #2a9d60;
-      border-radius: 20px;
-      padding: 4px 14px;
-      font-family: 'Caveat', cursive;
-      font-size: 15px;
-      color: #2a9d60;
-      cursor: pointer;
-      transition: background 0.15s;
+      background:none; border:1.5px solid #2a9d60; border-radius:20px;
+      padding:4px 14px; font-family:'Caveat',cursive; font-size:15px;
+      color:#2a9d60; cursor:pointer; transition:background 0.15s;
     }
-    .ai-suggest-btn:hover { background: #d4f0e3; }
+    .ai-suggest-btn:hover { background:#d4f0e3; }
+
+    /* Image modal/lightbox */
+    .lightbox {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85);
+      z-index:999; align-items:center; justify-content:center;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox img { max-width:90vw; max-height:90vh; border-radius:12px; }
+    .lightbox-close {
+      position:absolute; top:16px; right:20px; color:#fff;
+      font-size:28px; cursor:pointer; background:none; border:none;
+    }
   </style>
 </head>
 <body>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightboxImg" src="" alt="Full image"/>
+</div>
+
 <div class="phone">
   <div class="toast" id="toast"></div>
 
@@ -375,7 +307,6 @@
     </div>
 
     <div class="divider"></div>
-
     <div class="ai-row">
       <span class="ai-label">✨ suggest:</span>
       <span class="ai-loading" id="aiLoading" style="display:none">thinking...</span>
@@ -390,21 +321,34 @@
   let tasks = [];
   let editingId = null;
 
-  // TOAST
-  function showToast(msg, type = '') {
+  // ── TOAST ──────────────────────────────────
+  function showToast(msg, type='') {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.className = 'toast show ' + type;
     setTimeout(() => { t.className = 'toast'; }, 2500);
   }
 
-  // STATUS
+  // ── STATUS ─────────────────────────────────
   function setStatus(state, text) {
     document.getElementById('statusDot').className = 'status-dot ' + state;
     document.getElementById('statusText').textContent = text;
   }
 
-  // SPLASH → DASHBOARD
+  // ── LIGHTBOX ───────────────────────────────
+  function openLightbox(url) {
+    document.getElementById('lightboxImg').src = url;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  // ── ESCAPE HELPERS ─────────────────────────
+  function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function escAttr(s) { return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+  // ── SPLASH → DASHBOARD ─────────────────────
   function showDashboard() {
     document.getElementById('splash').classList.remove('active');
     document.getElementById('dashboard').classList.add('active');
@@ -412,58 +356,86 @@
     fetchSuggestions();
   }
 
-  // ESCAPE HELPERS
-  function escapeHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-  function escapeAttr(s) {
-    return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-  }
-
-  // RENDER
+  // ── RENDER ─────────────────────────────────
   function renderTasks() {
     const list = document.getElementById('taskList');
     list.innerHTML = '';
-
     if (tasks.length === 0) {
       list.innerHTML = '<div class="empty-hint">no tasks yet... add one above! 🥒</div>';
       return;
     }
 
-    tasks.forEach((task) => {
+    tasks.forEach(task => {
       const done = task.content === 'done';
       const isEditing = editingId === task.id;
-      const item = document.createElement('div');
-      item.className = 'task-item';
+      const hasImage = !!task.imageUrl;
 
+      const card = document.createElement('div');
+      card.className = 'task-card';
+      card.dataset.id = task.id;
+
+      // ── TOP ROW ──
+      let topHtml = '';
       if (isEditing) {
-        item.innerHTML = `
-          <div class="task-check ${done ? 'done' : ''}"></div>
-          <input class="task-edit-input" id="edit-${task.id}"
-            value="${escapeAttr(task.title)}"
+        topHtml = `
+          <div class="task-check ${done?'done':''}"></div>
+          <input class="task-edit-input" id="edit-${task.id}" value="${escAttr(task.title)}"
             onkeydown="if(event.key==='Enter') saveEdit('${task.id}'); if(event.key==='Escape') cancelEdit();"/>
           <div class="task-actions">
             <button class="task-btn save" onclick="saveEdit('${task.id}')" title="Save">✓</button>
             <button class="task-btn cancel" onclick="cancelEdit()" title="Cancel">✕</button>
           </div>`;
+      } else {
+        topHtml = `
+          <div class="task-check ${done?'done':''}" onclick="toggleTask('${task.id}',${done})"></div>
+          <span class="task-text ${done?'done':''}">${escHtml(task.title)}</span>
+          <div class="task-actions">
+            <button class="task-btn edit" onclick="startEdit('${task.id}')" title="Edit">✏️</button>
+            <button class="task-btn img-btn" onclick="document.getElementById('img-input-${task.id}').click()" title="Add image">🖼️</button>
+            <button class="task-btn delete" onclick="deleteTask('${task.id}')" title="Delete">×</button>
+          </div>`;
+      }
+
+      // ── IMAGE SECTION ──
+      let imgHtml = '<div class="task-image-section">';
+      if (hasImage) {
+        imgHtml += `
+          <div class="task-image-wrapper">
+            <img class="task-image" src="${escAttr(task.imageUrl)}" alt="task image"
+              onclick="openLightbox('${escAttr(task.imageUrl)}')" style="cursor:pointer"/>
+            <button class="img-delete-btn" onclick="deleteImage('${task.id}')" title="Remove image">✕</button>
+          </div>`;
+      } else if (!isEditing) {
+        imgHtml += `
+          <div class="img-upload-area">
+            <label class="img-upload-label" for="img-input-${task.id}">
+              📷 add photo
+            </label>
+          </div>`;
+      }
+      // Hidden file input (always present, supports camera on mobile)
+      imgHtml += `
+        <input class="img-upload-input" type="file" id="img-input-${task.id}"
+          accept="image/*" capture="environment"
+          onchange="handleImageUpload(event, '${task.id}')"/>
+        <div class="img-uploading" id="img-loading-${task.id}" style="display:none">
+          <div class="spinner"></div> uploading...
+        </div>
+      </div>`;
+
+      card.innerHTML = `<div class="task-top">${topHtml}</div>${imgHtml}`;
+      list.appendChild(card);
+
+      if (isEditing) {
         setTimeout(() => {
           const inp = document.getElementById('edit-' + task.id);
           if (inp) { inp.focus(); inp.select(); }
         }, 30);
-      } else {
-        item.innerHTML = `
-          <div class="task-check ${done ? 'done' : ''}" onclick="toggleTask('${task.id}', ${done})"></div>
-          <span class="task-text ${done ? 'done' : ''}">${escapeHtml(task.title)}</span>
-          <div class="task-actions">
-            <button class="task-btn edit" onclick="startEdit('${task.id}')" title="Edit">✏️</button>
-            <button class="task-btn delete" onclick="deleteTask('${task.id}')" title="Delete">×</button>
-          </div>`;
       }
-      list.appendChild(item);
     });
   }
 
-  // LOAD ALL TASKS
+  // ── LOAD ALL TASKS ─────────────────────────
   async function loadTasks() {
     setStatus('loading', 'loading tasks...');
     try {
@@ -471,9 +443,9 @@
       if (!res.ok) throw new Error();
       const data = await res.json();
       tasks = data.notes || [];
-      setStatus('connected', `connected · ${tasks.length} task${tasks.length !== 1 ? 's' : ''}`);
+      setStatus('connected', `connected · ${tasks.length} task${tasks.length!==1?'s':''}`);
       renderTasks();
-    } catch (e) {
+    } catch(e) {
       setStatus('error', 'API error');
       document.getElementById('taskList').innerHTML =
         '<div class="empty-hint">couldn\'t load tasks 😢</div>';
@@ -481,7 +453,7 @@
     }
   }
 
-  // CREATE TASK
+  // ── CREATE TASK ────────────────────────────
   async function addTask() {
     const input = document.getElementById('taskInput');
     const text = input.value.trim();
@@ -490,8 +462,7 @@
     btn.disabled = true; input.disabled = true; btn.textContent = '…';
     try {
       const res = await fetch(`${API_BASE}/notes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ title: text, content: 'pending' })
       });
       if (!res.ok) throw new Error();
@@ -499,10 +470,10 @@
       tasks.unshift(data.note);
       input.value = '';
       renderTasks();
-      setStatus('connected', `connected · ${tasks.length} task${tasks.length !== 1 ? 's' : ''}`);
+      setStatus('connected', `connected · ${tasks.length} task${tasks.length!==1?'s':''}`);
       showToast('Task added! 🥒', 'success');
       fetchSuggestions();
-    } catch (e) {
+    } catch(e) {
       showToast('Could not add task', 'error');
     } finally {
       btn.disabled = false; btn.textContent = '+';
@@ -510,131 +481,167 @@
     }
   }
 
-  // START EDIT
-  function startEdit(id) {
-    editingId = id;
-    renderTasks();
-  }
+  // ── EDIT ───────────────────────────────────
+  function startEdit(id) { editingId = id; renderTasks(); }
+  function cancelEdit() { editingId = null; renderTasks(); }
 
-  // CANCEL EDIT
-  function cancelEdit() {
-    editingId = null;
-    renderTasks();
-  }
-
-  // SAVE EDIT
   async function saveEdit(id) {
     const input = document.getElementById('edit-' + id);
     if (!input) return;
     const newTitle = input.value.trim();
     if (!newTitle) { showToast('Title cannot be empty!', 'info'); return; }
-
     const task = tasks.find(t => t.id === id);
     if (!task) return;
     const oldTitle = task.title;
-
-    // Optimistic update
-    task.title = newTitle;
-    editingId = null;
-    renderTasks();
-
+    task.title = newTitle; editingId = null; renderTasks();
     try {
       const res = await fetch(`${API_BASE}/notes/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'PUT', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ title: newTitle, content: task.content })
       });
       if (!res.ok) throw new Error();
       showToast('Task updated! ✏️', 'success');
-    } catch (e) {
-      task.title = oldTitle; // revert
-      renderTasks();
+    } catch(e) {
+      task.title = oldTitle; renderTasks();
       showToast('Could not update task', 'error');
     }
   }
 
-  // TOGGLE DONE/PENDING
+  // ── TOGGLE ─────────────────────────────────
   async function toggleTask(id, currentlyDone) {
     const task = tasks.find(t => t.id === id);
     if (!task) return;
     const newStatus = currentlyDone ? 'pending' : 'done';
-    task.content = newStatus;
-    renderTasks();
+    task.content = newStatus; renderTasks();
     try {
       const res = await fetch(`${API_BASE}/notes/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'PUT', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ title: task.title, content: newStatus })
       });
       if (!res.ok) throw new Error();
-    } catch (e) {
-      task.content = currentlyDone ? 'done' : 'pending';
-      renderTasks();
+    } catch(e) {
+      task.content = currentlyDone ? 'done' : 'pending'; renderTasks();
       showToast('Could not update task', 'error');
     }
   }
 
-  // DELETE TASK
+  // ── DELETE TASK ────────────────────────────
   async function deleteTask(id) {
     const prev = [...tasks];
-    tasks = tasks.filter(t => t.id !== id);
-    renderTasks();
-    setStatus('connected', `connected · ${tasks.length} task${tasks.length !== 1 ? 's' : ''}`);
+    tasks = tasks.filter(t => t.id !== id); renderTasks();
+    setStatus('connected', `connected · ${tasks.length} task${tasks.length!==1?'s':''}`);
     try {
       const res = await fetch(`${API_BASE}/notes/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error();
       showToast('Task deleted 🗑️', '');
-    } catch (e) {
-      tasks = prev;
-      renderTasks();
+    } catch(e) {
+      tasks = prev; renderTasks();
       showToast('Could not delete task', 'error');
     }
   }
 
-  // AI SUGGESTIONS
+  // ── IMAGE UPLOAD ───────────────────────────
+  async function handleImageUpload(event, noteId) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('Image too large! Max 5MB', 'error'); return;
+    }
+
+    const loadingEl = document.getElementById('img-loading-' + noteId);
+    if (loadingEl) loadingEl.style.display = 'flex';
+    showToast('Uploading image... 📷', 'info');
+
+    try {
+      // Step 1: Get presigned upload URL from Lambda
+      const urlRes = await fetch(`${API_BASE}/notes/upload-url`, {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ noteId, fileType: file.type })
+      });
+      if (!urlRes.ok) throw new Error('Could not get upload URL');
+      const { uploadUrl, imageUrl } = await urlRes.json();
+
+      // Step 2: Upload image directly to S3
+      const uploadRes = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file
+      });
+      if (!uploadRes.ok) throw new Error('S3 upload failed');
+
+      // Step 3: Save imageUrl to DynamoDB via Lambda
+      const saveRes = await fetch(`${API_BASE}/notes/save-image`, {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ noteId, imageUrl, key: `images/${noteId}` })
+      });
+      if (!saveRes.ok) throw new Error('Could not save image URL');
+
+      // Update local state
+      const task = tasks.find(t => t.id === noteId);
+      if (task) task.imageUrl = imageUrl;
+      renderTasks();
+      showToast('Image uploaded! 🖼️', 'success');
+    } catch(e) {
+      showToast('Image upload failed: ' + e.message, 'error');
+      if (loadingEl) loadingEl.style.display = 'none';
+    }
+  }
+
+  // ── DELETE IMAGE ───────────────────────────
+  async function deleteImage(noteId) {
+    const task = tasks.find(t => t.id === noteId);
+    if (!task) return;
+    const oldUrl = task.imageUrl;
+    task.imageUrl = null; task.imageKey = null; renderTasks();
+
+    try {
+      const res = await fetch(`${API_BASE}/notes/${noteId}/image`, { method: 'DELETE' });
+      if (!res.ok) throw new Error();
+      showToast('Image removed 🗑️', '');
+    } catch(e) {
+      task.imageUrl = oldUrl; renderTasks();
+      showToast('Could not delete image', 'error');
+    }
+  }
+
+  // ── AI SUGGESTIONS ─────────────────────────
   async function fetchSuggestions() {
     const loading = document.getElementById('aiLoading');
     const chips = document.getElementById('aiChips');
-    chips.innerHTML = '';
-    loading.style.display = '';
+    chips.innerHTML = ''; loading.style.display = '';
     const existingTasks = tasks.map(t => t.title).join(', ') || 'none yet';
     try {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 200,
+          model: 'claude-sonnet-4-20250514', max_tokens: 200,
           system: 'You are a playful task suggestion assistant for "Dil Pickle to-do". Generate exactly 3 short fun task suggestions. Respond ONLY with a JSON array of 3 strings. Each 2-5 words. Occasionally be pickle-themed.',
           messages: [{ role: 'user', content: `My tasks: ${existingTasks}. Suggest 3 more.` }]
         })
       });
       const data = await res.json();
       loading.style.display = 'none';
-      const text = data.content?.map(b => b.text||'').join('') || '[]';
+      const text = data.content?.map(b=>b.text||'').join('') || '[]';
       let suggestions = [];
       try { suggestions = JSON.parse(text.replace(/```json|```/g,'').trim()); } catch(e){}
       suggestions.forEach(s => {
         const chip = document.createElement('button');
-        chip.className = 'ai-chip';
-        chip.textContent = '+ ' + s;
+        chip.className = 'ai-chip'; chip.textContent = '+ ' + s;
         chip.onclick = async () => {
           chip.disabled = true; chip.textContent = '...';
           try {
             const r = await fetch(`${API_BASE}/notes`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              method: 'POST', headers: {'Content-Type':'application/json'},
               body: JSON.stringify({ title: s, content: 'pending' })
             });
             if (!r.ok) throw new Error();
             const d = await r.json();
-            tasks.unshift(d.note);
-            renderTasks();
-            chip.remove();
+            tasks.unshift(d.note); renderTasks(); chip.remove();
             showToast('Task added! 🥒', 'success');
           } catch(e) {
-            chip.disabled = false;
-            chip.textContent = '+ ' + s;
+            chip.disabled = false; chip.textContent = '+ ' + s;
             showToast('Could not add task', 'error');
           }
         };
